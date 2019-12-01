@@ -34,3 +34,11 @@ ByteBuf 功能相較 ByteBuffer 更強大且靈活。是一個能更好的搭配
     
     *   要注意 readableBytes() 事實上是 readableBytes() writerIndex - readerIndex。CompositeByteBuf 組合多個 ByteBuf 後 
         writeIndex 會歸零，需要手動調整。
+        
+    <br>
+    
+3.  [ByteBufProcessDemo](./src/main/java/com/frizo/nettynote/bytebuf/ByteBufProcessDemo.java)
+
+    *   `ByteProcessor` 是一個 functional interface，定義了一個方法，可以對每一個 ByteBuf 中的 byte 做檢查。
+    
+        `boolean process(byte var1) throws Exception`
