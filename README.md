@@ -27,6 +27,10 @@
 	
 *   ### Netty 組件
 	
-    2.  [ByteBuf 使用](./nettynote-bytebuf)
+    1.  [ByteBuf 使用](./nettynote-bytebuf)
 
         ByteBuf 是 Netty 的資料傳輸容器。這邊透過實際操作 ByteBuf API 來學習。
+        
+    2.  [Channel 相關](./nettynote-channel)
+    
+        Channel 是 Netty 的連線。其衍伸出來的相關組件，則是處理連線傳輸資訊的業務邏輯。這邊簡單介紹一下一些基本組件的使用方法。
