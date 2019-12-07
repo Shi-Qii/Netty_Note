@@ -20,6 +20,7 @@
     <modules>
         <module>fatcat-server</module>
         <module>fatcat-client</module>
+        <module>fatcat-chatserver</module>
     </modules>
 
     <dependencyManagement>
