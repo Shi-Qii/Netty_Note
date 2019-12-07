@@ -22,3 +22,7 @@ Client 端傳值給 Server 端，Server 端再把值返回給 Client 端。
 2. [fatcat-client](./fatcat-client)
 
     簡單的 Java Echo Client，具體實現可以點擊超聯結查看。
+    
+3.  [fatcat-chatserver](./fatcat-chatserver)
+
+    實現一個基於 HTTP 的線上 web 聊天室伺服器。使用 WebSocket 握手協議。
