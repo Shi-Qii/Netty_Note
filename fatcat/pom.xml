@@ -21,6 +21,8 @@
         <module>fatcat-server</module>
         <module>fatcat-client</module>
         <module>fatcat-chatserver</module>
+        <module>fatcat-broadcaster</module>
+        <module>fatcat-broadmonitor</module>
     </modules>
 
     <dependencyManagement>
