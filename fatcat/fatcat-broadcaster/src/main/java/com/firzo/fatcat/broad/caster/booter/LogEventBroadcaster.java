@@ -28,10 +28,8 @@ public class LogEventBroadcaster {
     }
 
     public void start() throws Exception{
-        System.out.println(">>>>>>>up>>>>>>");
         Channel ch = bootstrap.bind(0) // 在 0 port 上，發布廣播
                 .sync().channel();
-        System.out.println(">>>>>>>down>>>>>>");
 
         long pointer = 0;
         while (true){
@@ -44,7 +42,6 @@ public class LogEventBroadcaster {
                 raFile.seek(pointer); // 設定指針
                 String line;
                 while ((line = raFile.readLine()) != null){
-                    System.out.println("輸出資料 : " + line);
                     ch.writeAndFlush(new LogEvent(null, -1, file.getAbsolutePath(), line));
                 }
                 pointer = raFile.getFilePointer(); // 取得新的指針位址

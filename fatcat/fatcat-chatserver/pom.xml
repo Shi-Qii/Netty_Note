@@ -44,13 +44,22 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.allen.capturewebdata.Main</mainClass>
+                            <mainClass>com.frizo.fatcat.chat.server.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>run-package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assembly</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

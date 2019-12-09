@@ -14,9 +14,9 @@ import java.security.cert.CertificateException;
 
 public class Main {
     public static void main(String[] args) throws CertificateException, SSLException {
-        int port = 7755;
-        //startNormalChatServer(port);
-        startSecureChatServer(port); // 有 SSL 傳輸加密的 Server
+        int port = 80;
+        startNormalChatServer(port);
+        //startSecureChatServer(port); // 有 SSL 傳輸加密的 Server
     }
 
     private static void startNormalChatServer(int port){

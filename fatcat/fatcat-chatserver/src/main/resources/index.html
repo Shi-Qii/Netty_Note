@@ -1,107 +1,165 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>fatcat ChatServer</title>
-    <style type="text/css">
-        #ui * {
-            width: 100%;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <style rel="stylesheet">
+        /* width */
+        ::-webkit-scrollbar {
+            width: 12px;
         }
 
-        #ui textarea {
-            height: 15em;
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: rgba(100, 93, 93, 0.5);
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c9dbdf;
+        }
+
+        body {
+            background-color: #ffffff
+        }
+
+        .scrollbar-default::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+            background-color: #2BBBAD;
+        }
+
+        .message-area {
+            background-color: rgb(228, 255, 255);
+            height: 80vh;
+            overflow-y: scroll;
+        }
+
+        p{
+            margin-top: 1px;
         }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript">
-        function log(msg) {
-            var log = $('#log')
-            log.append(msg + " \n").scrollTop(log[0].scrollHeight - log.height());
-        }
-        $(function () {
-            $('#url').val((location.protocol.indexOf('https') == -1 ? 'ws://' : 'wss://') + location.host + '/ws')
-
-            if (!WebSocket) {
-                $('#not-supported').show()
-            } else {
-                var ws = null
-                $('#connect').click(function () {
-                    if (ws == null || ws.readyState != 1) {
-                        ws = new WebSocket($('#url').val())
-
-                        ws.onerror = function (e) {
-                            log('Error : ' + e.message)
-                        }
-
-                        ws.onopen = function () {
-                            log('connected')
-                        }
-
-                        ws.onclose = function () {
-                            log('disconnected')
-                        }
-
-                        ws.onmessage = function (d) {
-                            log('Response : ' + d.data)
-                        }
-
-                        $('#send').click(function () {
-                            var msg = $('#msg').val()
-                            $('#msg').val('')
-                            ws.send(msg)
-                        })
-
-                    } else {
-                        log('closing connection')
-                        ws.close()
-                    }
-                })
-            }
-        })
-    </script>
+    <title>Fatcat 聊天室</title>
 </head>
-
 <body>
+<div id="app">
 
-<div id="not-supported" style="float: left; width: 600px; margin-left: 10px; display: none">
-    <p>Uh-oh, the browser you're using doesn't have native support for WebSocket. That means you can't run this
-        demo.</p>
+    <div class="header">
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                Fatcat 聊天室
+            </a>
 
-    <p>The following link lists the browsers that support WebSocket:</p>
+            <div class="mr-2">
+                <i class="material-icons">face</i>
+                <span>{{username}}</span>
+            </div>
 
-    <p><a href="http://caniuse.com/#feat=websockets">http://caniuse.com/#feat=websockets</a></p>
-</div>
+        </nav>
+    </div>
 
-<table>
-    <tr>
-        <td>
-            <div>Enter a message below to send</div>
-            <input type="text" id="msg"/>
-            <input type="submit" value="Send" id="send"/>
-        </td>
-        <td id="ui">
-            <input type="text" id="url"/>
-            <textarea id="log" disabled></textarea>
-            <input type="submit" id="connect" value="Connect"/>
-        </td>
-    </tr>
-</table>
-<div style="float: left; width: 600px; margin-left: 10px;">
-    <p><br><strong>Instructions:</strong></p>
-    <table class="instructions" cellspacing="0px" cellpadding="2px">
-        <tr>
-            <td valign="top" nowrap>Step 1: &nbsp;</td>
-            <td valign="top">Press the <strong>Connect</strong> button.</td>
-        </tr>
-        <tr>
-            <td valign="top" nowrap>Step 2: &nbsp;</td>
-            <td valign="top">Once connected, enter a message and press the <strong>Send</strong> button. The server's
-                response will
-                appear in the <strong>Log</strong> section. You can send as many messages as you like
-            </td>
-        </tr>
-    </table>
+    <div class="container-sm">
+
+        <div id="not-supported" class="alert alert-primary" style="display:none;" role="alert">
+            您的瀏覽器不支援此聊天室，sorry。
+        </div>
+
+        <div class="row">
+            <div class="col mx-4 text-center">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mx-4 mt-2">
+                <div id="message-area" class="message-area">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center mt-3">
+            <div class="col mx-4 text-center">
+                <div class="input-group mb-3">
+                    <input type="text" id="myMsg" class="form-control" placeholder="輸入消息" aria-label="消息" aria-describedby="button-addon2" v-on:keyup.enter="postMsg">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" id="msgSender" @click="postMsg">發送消息</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 </body>
 
+<script type="text/javascript">
+
+    new Vue({
+        ws : null, //websocket
+        el : '#app',
+        data : {
+            username: "匿名者",
+        },
+
+        methods : {
+            postMsg(){
+                msg = $("#myMsg").val();
+                msg = this.username + " : " + msg
+                this.ws.send(msg)
+                $("#myMsg").val("")
+            }
+        },
+
+        beforeMount() {
+            this.username = prompt("請輸入名稱", "匿名者")
+        },
+
+        mounted() {
+            var url = (location.protocol.indexOf('https') == -1 ? 'ws://' : 'wss://') + location.host + '/ws'
+            if (!WebSocket) {
+                $('#not-supported').show()
+            }else {
+
+                if (this.ws == null || this.ws.readyState != 1){
+                    this.ws = new WebSocket(url)
+
+                    this.ws.onerror = function (e) {
+                        $("#message-area").append("<div>系統通知 : " + e.type + "</div>")
+                    }
+
+                    this.ws.onopen = function () {
+                        $("#message-area").append("<div>系統通知 : 已連線到聊天伺服器</div>")
+                    }
+
+                    this.ws.onclose = function () {
+                        $("#message-area").append("<div>系統通知 : 與伺服器連線斷開</div>")
+                    }
+
+                    this.ws.onmessage = function (d) {
+                        $("#message-area").append("<div>" + d.data + "</div>");
+                    }
+                }
+            }
+        }
+    })
+
+
+</script>
 </html>
