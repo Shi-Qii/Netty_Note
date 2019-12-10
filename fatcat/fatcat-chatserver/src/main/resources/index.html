@@ -142,18 +142,22 @@
 
                     this.ws.onerror = function (e) {
                         $("#message-area").append("<div>系統通知 : " + e.type + "</div>")
+                        $("#message-area").scrollTop($("#message-area").prop("scrollHeight"))
                     }
 
                     this.ws.onopen = function () {
                         $("#message-area").append("<div>系統通知 : 已連線到聊天伺服器</div>")
+                        $("#message-area").scrollTop($("#message-area").prop("scrollHeight"))
                     }
 
                     this.ws.onclose = function () {
                         $("#message-area").append("<div>系統通知 : 與伺服器連線斷開</div>")
+                        $("#message-area").scrollTop($("#message-area").prop("scrollHeight"))
                     }
 
                     this.ws.onmessage = function (d) {
                         $("#message-area").append("<div>" + d.data + "</div>");
+                        $("#message-area").scrollTop($("#message-area").prop("scrollHeight"))
                     }
                 }
             }
