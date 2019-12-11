@@ -21,7 +21,7 @@ public class LogEventMonitor {
         bootstrap = new Bootstrap();
         bootstrap.group(group)
                  .channel(NioDatagramChannel.class)
-                 .option(ChannelOption.SO_BROADCAST, true)
+                 .option(ChannelOption.SO_BROADCAST, true) // 指定為廣播模式
                  .handler(new ChannelInitializer<Channel>() {
                      @Override
                      protected void initChannel(Channel channel) throws Exception {
@@ -33,7 +33,7 @@ public class LogEventMonitor {
     }
 
     public Channel start(){
-        return this.bootstrap.bind().syncUninterruptibly().channel();
+        return this.bootstrap.bind().syncUninterruptibly().channel(); // bind到指定端口，返回不可中斷的 channel。
     }
 
     public void destory(){

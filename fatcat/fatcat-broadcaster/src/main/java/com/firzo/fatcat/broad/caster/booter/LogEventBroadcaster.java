@@ -34,7 +34,6 @@ public class LogEventBroadcaster {
         long pointer = 0;
         while (true){
             long len = file.length();
-            System.out.println("len = " + len);
             if (len < pointer) {
                 pointer = len;
             }else if(len > pointer){

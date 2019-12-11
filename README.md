@@ -21,9 +21,10 @@
     
     1.  [FatCat](./fatcat)
 
-	    FatCat 是一個最基本的 Netty 網路應用，實作一對 Echo Server Client。也是我開啟練習的第一個 Netty 項目。
+	    FatCat 是一些最基本的 Netty 網路應用實作集合專案，最初從實作一對 Echo Server Client 到
+	    後面實作更進階項目。也是我開啟練習的第一個 Netty 項目。
 	    
-	    後面有逐漸添加了一些好玩的實作項目，例如線上聊天室等。
+	    後面逐漸新添加了一些好玩的實作，例如線上聊天室、UPD 廣播等。
 	
 	<br>
 	
