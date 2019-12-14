@@ -45,6 +45,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
                ByteBuf buf =  alloc.buffer(length).writeBytes(bytes);
                ctx.write(buf);
             }
+            fileStream.close();
 
             ChannelFuture future = ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT); // 沖掉緩衝區
 
